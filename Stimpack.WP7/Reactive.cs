@@ -22,6 +22,11 @@
             return source.Subscribe(this);
         }
 
+        public IDisposable Subscribe(IObserver<T> observer)
+        {
+            return changes.Subscribe(observer);
+        }
+
         void IObserver<T>.OnNext(T next)
         {
             if (Equals(Value, next))
@@ -39,11 +44,6 @@
 
         void IObserver<T>.OnCompleted()
         {
-        }
-
-        public IDisposable Subscribe(IObserver<T> observer)
-        {
-            return changes.Subscribe(observer);
         }
     }
 }
