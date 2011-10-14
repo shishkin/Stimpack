@@ -4,7 +4,7 @@
     using System.ComponentModel;
     using System.Reactive.Subjects;
 
-    public class Reactive<T> : IObservable<T>, IObserver<T>, INotifyPropertyChanged
+    public class Reactive<T> : IObservable<T>, INotifyPropertyChanged
     {
         readonly Subject<T> changes = new Subject<T>();
 
@@ -19,7 +19,7 @@
 
         public IDisposable SubscribeTo(IObservable<T> source)
         {
-            return source.Subscribe(this);
+            return source.Subscribe(OnNext, changes.OnError);
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
@@ -27,7 +27,7 @@
             return changes.Subscribe(observer);
         }
 
-        void IObserver<T>.OnNext(T next)
+        protected void OnNext(T next)
         {
             if (Equals(Value, next))
                 return;
@@ -35,15 +35,6 @@
             Value = next;
             changes.OnNext(next);
             PropertyChanged(this, new PropertyChangedEventArgs("Value"));
-        }
-
-        void IObserver<T>.OnError(Exception exception)
-        {
-            changes.OnError(exception);
-        }
-
-        void IObserver<T>.OnCompleted()
-        {
         }
     }
 }

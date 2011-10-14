@@ -140,6 +140,19 @@
             observedValues.ShouldEqual(new[] { 5 });
         }
 
+        [Fact]
+        public void Active_can_actively_change_its_value()
+        {
+            var active = source.ToActive();
+            active.Subscribe(observer);
+
+            source.OnNext(5);
+            active.Value = 8;
+            source.OnNext(10);
+
+            observedValues.ShouldEqual(new[] { 5, 8, 10 });
+        }
+
         Reactive<int> CreateReactiveAsPowerOfTwo()
         {
             var reactive = source

@@ -46,6 +46,9 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="..\Stimpack.WP7\Active.cs">
+      <Link>Active.cs</Link>
+    </Compile>
     <Compile Include="..\Stimpack.WP7\Reactive.cs">
       <Link>Reactive.cs</Link>
     </Compile>
