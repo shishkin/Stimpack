@@ -55,6 +55,9 @@
     <Compile Include="..\Stimpack.WP7\StimpackExtensions.cs">
       <Link>StimpackExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Stimpack.WP7\Transformation.cs">
+      <Link>Transformation.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
