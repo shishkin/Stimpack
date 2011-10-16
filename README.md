@@ -8,14 +8,16 @@ The library is aimed to run on the latest versions of Windows Phone, Silverlight
 Install
 ---
 Get it from [NuGet](http://nuget.org/List/Packages/Stimpack).
-```PowerShell
+
+```
 PM> Install-Package Stimpack
 ```
 
 Build
 ---
 Execute in PowerShell:
-```PowerShell
+
+```
 .\psake build
 ```
 
