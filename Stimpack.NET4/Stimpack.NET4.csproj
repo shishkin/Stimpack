@@ -46,22 +46,22 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Stimpack.WP7\Active.cs">
+    <Compile Include="..\Stimpack\Active.cs">
       <Link>Active.cs</Link>
     </Compile>
-    <Compile Include="..\Stimpack.WP7\Reactive.cs">
+    <Compile Include="..\Stimpack\Reactive.cs">
       <Link>Reactive.cs</Link>
     </Compile>
-    <Compile Include="..\Stimpack.WP7\StimpackExtensions.cs">
+    <Compile Include="..\Stimpack\StimpackExtensions.cs">
       <Link>StimpackExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Stimpack.WP7\Transformation.cs">
+    <Compile Include="..\Stimpack\Transformation.cs">
       <Link>Transformation.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Stimpack.WP7\packages.config">
+    <None Include="..\Stimpack\packages.config">
       <Link>packages.config</Link>
     </None>
   </ItemGroup>

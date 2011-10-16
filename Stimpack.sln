@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stimpack.WP7", "Stimpack.WP7\Stimpack.WP7.csproj", "{ADD64C3A-BDA1-456C-B16B-F07F92E119C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stimpack", "Stimpack\Stimpack.csproj", "{ADD64C3A-BDA1-456C-B16B-F07F92E119C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stimpack.NET4", "Stimpack.NET4\Stimpack.NET4.csproj", "{45373BC0-4817-4E0B-8B7F-9B6617033D5B}"
 EndProject
