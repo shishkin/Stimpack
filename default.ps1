@@ -1,4 +1,4 @@
-$framework = '4.0'
+$framework = '4.0x86'
 $build_dir = "$(resolve-path .)\build"
 $nuget = resolve-path .\packages\nuget.*\tools\nuget.exe
 
