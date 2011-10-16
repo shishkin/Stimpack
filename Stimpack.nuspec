@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Stimpack</id>
+    <version>$version$</version>
+    <title>Stimpack</title>
+    <authors>Sergey Shishkin</authors>
+    <owners>Sergey Shishkin</owners>
+    <licenseUrl>http://github.com/shishkin/Stimpack/raw/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://github.com/shishkin/Stimpack</projectUrl>
+    <!--
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET library for highly reactive applications.</description>
+    <copyright>Copyright 2011 Sergey Shishkin</copyright>
+    <tags>rx reactive stimpack</tags>
+  </metadata>
+</package>

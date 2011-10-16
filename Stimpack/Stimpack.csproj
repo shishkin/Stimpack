@@ -13,7 +13,7 @@
     <AssemblyName>Stimpack</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
@@ -23,27 +23,30 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug</OutputPath>
+    <OutputPath>..\build\lib\sl3-wp\</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\build\lib\sl3-wp\Stimpack.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release</OutputPath>
+    <OutputPath>..\build\lib\sl3-wp\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\build\lib\sl3-wp\Stimpack.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Observable" />
     <Reference Include="System.Reactive">
       <HintPath>..\packages\Rx_Experimental-Main.1.1.11011\lib\SL3-WP\System.Reactive.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

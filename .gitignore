@@ -2,6 +2,7 @@
 [Rr]elease/
 [Bb]in/
 [Oo]bj/
+[Bb]uild/
 *.user
 *.suo
 *.cache
