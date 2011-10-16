@@ -5,4 +5,20 @@ Stimpack helps writing clear and concise, declarative, domain-specific code by m
 
 The library is aimed to run on the latest versions of Windows Phone, Silverlight and .NET Framework. Support for Mono, Mono for Android and MonoTouch considered strategic.
 
+Install
+---
+Get it from [NuGet](http://nuget.org/List/Packages/Stimpack).
+```PowerShell
+PM> Install-Package Stimpack
+```
+
+Build
+---
+Execute in PowerShell:
+```PowerShell
+.\psake build
+```
+
+Credits
+---
 Stimpack is inspired by [ReactiveUI](http://www.reactiveui.net/), where it borrows most of its core ideas, focusing at the same time on providing a simple and clear API.
