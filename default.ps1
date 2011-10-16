@@ -29,4 +29,9 @@ task package -depends build, nuspec {
   exec { & $nuget pack $build_dir\Stimpack.nuspec -Version $version -OutputDirectory $build_dir }
 }
 
+task publish -depends package {
+  $pack = resolve-path $build_dir\Stimpack.*.nupkg | select -last 1
+  exec { & $nuget push $pack }
+}
+
 task default -depends build
