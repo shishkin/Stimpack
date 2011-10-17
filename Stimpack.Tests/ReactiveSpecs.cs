@@ -9,7 +9,7 @@
 
     using Microsoft.Reactive.Testing;
 
-    using Should;
+    using Shouldly;
 
     using Xunit;
 
@@ -39,7 +39,7 @@
         {
             var reactive = CreateReactiveAsPowerOfTwo();
 
-            reactive.Value.ShouldEqual(0);
+            reactive.Value.ShouldBe(0);
         }
 
         [Fact]
@@ -47,7 +47,7 @@
         {
             var reactive = source.ToReactive(3);
 
-            reactive.Value.ShouldEqual(3);
+            reactive.Value.ShouldBe(3);
         }
 
         [Fact]
@@ -58,7 +58,7 @@
             source.OnNext(3);
             source.OnNext(5);
 
-            reactive.Value.ShouldEqual(25);
+            reactive.Value.ShouldBe(25);
         }
 
         [Fact]
@@ -69,7 +69,7 @@
             source.OnNext(3);
             source.OnNext(5);
 
-            observedValues.ShouldEqual(new[] { 9, 25 });
+            observedValues.ShouldBe(new[] { 9, 25 });
         }
 
         [Fact]
@@ -86,7 +86,7 @@
             third.OnNext(4);
             second.OnNext(5);
 
-            observedValues.ShouldEqual(new[] { 4, 3, 4, 5 });
+            observedValues.ShouldBe(new[] { 4, 3, 4, 5 });
         }
 
         [Fact]
@@ -97,7 +97,7 @@
             source.OnNext(5);
             source.OnNext(5);
 
-            observedValues.ShouldEqual(new[] { 25 });
+            observedValues.ShouldBe(new[] { 25 });
         }
 
         [Fact]
@@ -109,7 +109,7 @@
 
             source.OnNext(5);
 
-            property.ShouldEqual("Value");
+            property.ShouldBe("Value");
         }
 
         [Fact]
@@ -121,7 +121,7 @@
             source.OnNext(5);
             source.OnNext(0);
 
-            observedErrors.Single().ShouldBeType<DivideByZeroException>();
+            observedErrors.Single().ShouldBeTypeOf<DivideByZeroException>();
         }
 
         [Fact]
@@ -137,7 +137,7 @@
 
             source.OnNext(10);
 
-            observedValues.ShouldEqual(new[] { 5 });
+            observedValues.ShouldBe(new[] { 5 });
         }
 
         [Fact]
@@ -150,7 +150,7 @@
             active.Value = 8;
             source.OnNext(10);
 
-            observedValues.ShouldEqual(new[] { 5, 8, 10 });
+            observedValues.ShouldBe(new[] { 5, 8, 10 });
         }
 
         Reactive<int> CreateReactiveAsPowerOfTwo()

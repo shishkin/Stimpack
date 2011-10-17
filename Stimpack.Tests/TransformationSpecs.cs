@@ -5,7 +5,7 @@ namespace Stimpack
     using System.Collections.ObjectModel;
     using System.Linq;
 
-    using Should;
+    using Shouldly;
 
     using Xunit;
 
@@ -23,13 +23,13 @@ namespace Stimpack
         {
             IList<string> trans = source.Transform(x => x.ToString());
 
-            trans.IsReadOnly.ShouldBeTrue();
-            Assert.Throws<InvalidOperationException>(() => trans.Add(""));
-            Assert.Throws<InvalidOperationException>(() => trans.Clear());
-            Assert.Throws<InvalidOperationException>(() => trans.Remove(""));
-            Assert.Throws<InvalidOperationException>(() => trans.RemoveAt(0));
-            Assert.Throws<InvalidOperationException>(() => trans.Insert(0, ""));
-            Assert.Throws<InvalidOperationException>(() => trans[0] = "");
+            trans.IsReadOnly.ShouldBe(true);
+            Should.Throw<InvalidOperationException>(() => trans.Add(""));
+            Should.Throw<InvalidOperationException>(() => trans.Clear());
+            Should.Throw<InvalidOperationException>(() => trans.Remove(""));
+            Should.Throw<InvalidOperationException>(() => trans.RemoveAt(0));
+            Should.Throw<InvalidOperationException>(() => trans.Insert(0, ""));
+            Should.Throw<InvalidOperationException>(() => trans[0] = "");
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Stimpack
             new[] { 1, 2, 3, 4 }
                 .Transform(x => x.ToString())
                 .ToArray()
-                .ShouldEqual(new[] { "1", "2", "3", "4" });
+                .ShouldBe(new[] { "1", "2", "3", "4" });
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Stimpack
             source.Insert(0, 2);
             source.Insert(2, 4);
 
-            trans.ToArray().ShouldEqual(new[] { "2", "3", "4", "5" });
+            trans.ShouldBe(new[] { "2", "3", "4", "5" });
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Stimpack
             source.Remove(4);
             source.RemoveAt(1);
 
-            trans.ToArray().ShouldEqual(new[] { "2", "5" });
+            trans.ShouldBe(new[] { "2", "5" });
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Stimpack
 
             source[2] = 10;
 
-            trans.ToArray().ShouldEqual(new[] { "2", "3", "10", "5" });
+            trans.ShouldBe(new[] { "2", "3", "10", "5" });
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Stimpack
             source.Add(2);
             source.Add(4);
 
-            trans.ToArray().ShouldEqual(new[] { "2", "4" });
+            trans.ShouldBe(new[] { "2", "4" });
         }
 
         IEnumerable<string> CreateToStringTransformation()
