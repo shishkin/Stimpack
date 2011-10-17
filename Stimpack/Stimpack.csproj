@@ -60,6 +60,10 @@
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
     <Compile Include="Active.cs" />
+    <Compile Include="Internal\InternalExtensions.cs" />
+    <Compile Include="ObservableView.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reactive.cs" />
     <Compile Include="ReadonlyObservableCollection.cs" />
