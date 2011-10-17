@@ -66,7 +66,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reactive.cs" />
-    <Compile Include="ReadonlyObservableCollection.cs" />
+    <Compile Include="Internal\ReadonlyObservableCollection.cs" />
     <Compile Include="StimpackExtensions.cs" />
     <Compile Include="Transformation.cs" />
   </ItemGroup>

@@ -70,14 +70,14 @@
     <Compile Include="..\Stimpack\Internal\InternalExtensions.cs">
       <Link>Internal\InternalExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Stimpack\Internal\ReadonlyObservableCollection.cs">
+      <Link>Internal\ReadonlyObservableCollection.cs</Link>
+    </Compile>
     <Compile Include="..\Stimpack\ObservableView.cs">
       <Link>ObservableView.cs</Link>
     </Compile>
     <Compile Include="..\Stimpack\Reactive.cs">
       <Link>Reactive.cs</Link>
-    </Compile>
-    <Compile Include="..\Stimpack\ReadonlyObservableCollection.cs">
-      <Link>ReadonlyObservableCollection.cs</Link>
     </Compile>
     <Compile Include="..\Stimpack\StimpackExtensions.cs">
       <Link>StimpackExtensions.cs</Link>

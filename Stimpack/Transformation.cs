@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Reactive.Linq;
 
+    using Internal;
+
     public class Transformation<TSource, TResult> : ReadonlyObservableCollection<TResult>
     {
         readonly IEnumerable<TSource> source;

@@ -1,10 +1,7 @@
 namespace Stimpack
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Reactive.Linq;
 
     public static class StimpackExtensions
     {
@@ -43,24 +40,14 @@ namespace Stimpack
         }
 
         /// <summary>
-        /// Returns an observable sequence of the source collection change notifications.
-        /// Returns Observable.Never for collections not implementing INCC.
+        /// Creates a read-only observable collection view with filtering and sorting support.
         /// </summary>
-        public static IObservable<NotifyCollectionChangedEventArgs> ObserveCollectionChangedArgs(
-            this IEnumerable source)
+        public static ObservableView<T> CreateView<T>(
+            this IEnumerable<T> source,
+            Func<T, bool> filter = null,
+            IComparer<T> order = null)
         {
-            var notifying = source as INotifyCollectionChanged;
-            if (notifying == null)
-            {
-                return Observable.Never<NotifyCollectionChangedEventArgs>();
-            }
-
-            return Observable.FromEventPattern<
-                NotifyCollectionChangedEventHandler,
-                NotifyCollectionChangedEventArgs>(
-                    ev => notifying.CollectionChanged += ev,
-                    ev => notifying.CollectionChanged -= ev)
-                .Select(x => x.EventArgs);
+            return new ObservableView<T>(source, filter, order);
         }
     }
 }
