@@ -55,6 +55,9 @@
     <Compile Include="..\Stimpack\Reactive.cs">
       <Link>Reactive.cs</Link>
     </Compile>
+    <Compile Include="..\Stimpack\ReadonlyObservableCollection.cs">
+      <Link>ReadonlyObservableCollection.cs</Link>
+    </Compile>
     <Compile Include="..\Stimpack\StimpackExtensions.cs">
       <Link>StimpackExtensions.cs</Link>
     </Compile>
@@ -71,7 +74,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ProjectLinkReference="add64c3a-bda1-456c-b16b-f07f92e119c2" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="add64c3a-bda1-456c-b16b-f07f92e119c2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

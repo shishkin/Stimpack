@@ -2,13 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Linq;
     using System.Reactive.Linq;
 
-    public class Transformation<TSource, TResult>
-        : ObservableCollection<TResult>, IList<TResult>
+    public class Transformation<TSource, TResult> : ReadonlyObservableCollection<TResult>
     {
         readonly IEnumerable<TSource> source;
         readonly Func<TSource, TResult> selector;
@@ -61,42 +59,6 @@
         {
             return notification.Action == NotifyCollectionChangedAction.Remove ||
                 notification.Action == NotifyCollectionChangedAction.Replace;
-        }
-
-        bool ICollection<TResult>.IsReadOnly
-        {
-            get { return true; }
-        }
-
-        TResult IList<TResult>.this[int index]
-        {
-            get { return base[index]; }
-            set { throw new InvalidOperationException(); }
-        }
-
-        void ICollection<TResult>.Add(TResult item)
-        {
-            throw new InvalidOperationException();
-        }
-
-        void ICollection<TResult>.Clear()
-        {
-            throw new InvalidOperationException();
-        }
-
-        bool ICollection<TResult>.Remove(TResult item)
-        {
-            throw new InvalidOperationException();
-        }
-
-        void IList<TResult>.Insert(int index, TResult item)
-        {
-            throw new InvalidOperationException();
-        }
-
-        void IList<TResult>.RemoveAt(int index)
-        {
-            throw new InvalidOperationException();
         }
     }
 }
