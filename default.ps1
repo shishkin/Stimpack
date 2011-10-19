@@ -2,11 +2,14 @@ $framework = '4.0x86'
 $build_dir = "$(resolve-path .)\build"
 $nuget = resolve-path .\packages\nuget.*\tools\nuget.exe
 
+task default -depends build
+
 task clean {
   rm $build_dir -recurse -force -errorAction silentlyContinue
 }
 
 task build -depends clean {
+  set_version .\CommonInfo.cs '0.0.*'
   exec { msbuild .\Stimpack.sln /p:Configuration=Release }
 }
 
@@ -34,4 +37,9 @@ task publish -depends package {
   exec { & $nuget push $pack }
 }
 
-task default -depends build
+function set_version ($file, $version) {
+  $content = gc $file
+  $replacement = "`$1`"$version`""
+  $content -replace '(AssemblyVersion\b*\()(["0-9.\*\b]+)', $replacement |
+    set-content $file
+}
