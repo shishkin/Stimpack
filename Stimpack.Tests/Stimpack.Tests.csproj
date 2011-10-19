@@ -63,6 +63,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReactiveObjectSpecs.cs" />
     <Compile Include="ReactiveSpecs.cs" />
     <Compile Include="TransformationSpecs.cs" />
   </ItemGroup>
