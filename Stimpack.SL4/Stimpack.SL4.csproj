@@ -49,6 +49,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="System.Interactive">
+      <HintPath>..\packages\Ix_Experimental-Main.1.1.10823\lib\SL4\System.Interactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive">
       <HintPath>..\packages\Rx_Experimental-Main.1.1.11011\lib\SL4\System.Reactive.dll</HintPath>
       <Private>False</Private>
@@ -101,7 +104,7 @@
       <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
         <SilverlightProjectProperties />
       </FlavorProperties>
-      <UserProperties ProjectLinkReference="add64c3a-bda1-456c-b16b-f07f92e119c2" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+      <UserProperties ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" ProjectLinkReference="add64c3a-bda1-456c-b16b-f07f92e119c2" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,6 +4,8 @@ namespace Stimpack.Internal
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Reactive;
     using System.Reactive.Linq;
 
     static class InternalExtensions
@@ -33,6 +35,17 @@ namespace Stimpack.Internal
                     ev => notifying.CollectionChanged += ev,
                     ev => notifying.CollectionChanged -= ev)
                 .Select(x => x.EventArgs);
+        }
+
+        public static IObservable<EventPattern<PropertyChangedEventArgs>> ObservePropertyChanged(
+        this INotifyPropertyChanged target)
+        {
+            return Observable.FromEventPattern<
+                PropertyChangedEventHandler,
+                PropertyChangedEventArgs>(
+                    x => target.PropertyChanged += x,
+                    x => target.PropertyChanged -= x)
+                .Select(x => x);
         }
     }
 }

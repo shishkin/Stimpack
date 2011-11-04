@@ -3,13 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Reactive.Disposables;
     using System.Reactive.Linq;
 
     using Internal;
 
     public class ObservableView<T> : ReadonlyObservableCollection<T>
     {
+        readonly Dictionary<T, ItemMetadata> tracks =
+            new Dictionary<T, ItemMetadata>();
         readonly IEnumerable<T> source;
         readonly Func<T, bool> filter;
         readonly IComparer<T> order;
@@ -23,25 +27,21 @@
             this.filter = filter ?? (_ => true);
             this.order = order;
 
-            FetchItems();
+            RebuildFull();
 
             BindNotifications();
         }
 
-        void FetchItems()
+        void RebuildFull()
+        {
+            ClearAll();
+
+            source.ForEach((item, index) => OnItemToAdd(index, item));
+        }
+
+        void ClearAll()
         {
             ClearItems();
-
-            var items = source.Where(filter);
-            if (order != null)
-            {
-                items = items.OrderBy(_ => _, order);
-            }
-
-            foreach (var item in items)
-            {
-                InsertItem(Count, item);
-            }
         }
 
         void BindNotifications()
@@ -49,7 +49,7 @@
             var changes = source.ObserveCollectionChangedArgs();
 
             changes.Where(x => x.Action == NotifyCollectionChangedAction.Reset)
-                .Subscribe(_ => FetchItems());
+                .Subscribe(_ => RebuildFull());
 
             changes.Where(HasItemsToRemove)
                 .SelectMany(x => x.OldItems.Cast<T>())
@@ -62,21 +62,77 @@
                 .Subscribe(x => OnItemToAdd(x.NewStartingIndex, x.value));
         }
 
-        void OnItemToAdd(int index, T value)
+        void OnItemToAdd(int index, T item)
         {
-            if (!filter(value))
+            TrackItem(item, index);
+
+            if (!filter(item))
                 return;
 
-            InsertItem(GetNewIndex(index, value), value);
+            InsertItem(GetNewIndex(index, item), item);
         }
 
-        void OnItemToRemove(T value)
+        void OnItemToRemove(T item)
         {
-            var index = Items.IndexOf(value);
+            UntrackItem(item);
+
+            var index = Items.IndexOf(item);
             if (index >= 0)
             {
                 RemoveItem(index);
             }
+        }
+
+        void TrackItem(T item, int index)
+        {
+            if (!(item is INotifyPropertyChanged))
+            {
+                return;
+            }
+
+            ItemMetadata track;
+            if (!tracks.TryGetValue(item, out track))
+            {
+                tracks[item] = track = new ItemMetadata();
+                var subscription = SubscribeItemChanges((INotifyPropertyChanged)item);
+                track.AddSubscription(subscription);
+            }
+
+            track.AddIndex(index);
+        }
+
+        IDisposable SubscribeItemChanges(INotifyPropertyChanged item)
+        {
+            return item.ObservePropertyChanged()
+                .Subscribe(x => OnItemChanged((T)x.Sender));
+        }
+
+        void OnItemChanged(T item)
+        {
+            var contains = Contains(item);
+            var shouldContain = filter(item);
+
+            if (contains && !shouldContain)
+            {
+                OnItemToRemove(item);
+            }
+
+            if (!contains && shouldContain)
+            {
+                tracks[item].Indices.ForEach(index => OnItemToAdd(index, item));
+            }
+        }
+
+        void UntrackItem(T item)
+        {
+            ItemMetadata track;
+            if (!tracks.TryGetValue(item, out track))
+            {
+                return;
+            }
+
+            track.DisposeSubscriptions();
+            tracks.Remove(item);
         }
 
         int GetNewIndex(int sourceIndex, T value)
@@ -100,6 +156,38 @@
         {
             return notification.Action == NotifyCollectionChangedAction.Remove ||
                 notification.Action == NotifyCollectionChangedAction.Replace;
+        }
+
+        class ItemMetadata
+        {
+            readonly List<int> indices = new List<int>();
+            readonly CompositeDisposable subscriptions = new CompositeDisposable();
+
+            public void AddIndex(int index)
+            {
+                if (!indices.Contains(index))
+                {
+                    indices.Add(index);
+                }
+            }
+
+            public IEnumerable<int> Indices
+            {
+                get { return indices.AsEnumerable(); }
+            }
+
+            public void AddSubscription(IDisposable subscription)
+            {
+                subscriptions.Add(subscription);
+            }
+
+            public void DisposeSubscriptions()
+            {
+                if (!subscriptions.IsDisposed)
+                {
+                    subscriptions.Dispose();
+                }
+            }
         }
     }
 }

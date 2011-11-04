@@ -3,6 +3,7 @@ namespace Stimpack
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Linq;
 
     using Shouldly;
@@ -128,6 +129,33 @@ namespace Stimpack
             source.Add(4);
 
             subject.ToArray().ShouldBe(new[] { 2, 4 });
+        }
+
+        [Fact]
+        public void Filter_respects_item_changes()
+        {
+            var obj1 = new MyObject();
+            var obj2 = new MyObject();
+            var objects = new ObservableCollection<MyObject> { obj1, obj2 };
+
+            var subject = new ObservableView<MyObject>(objects, x => x.Value > 0);
+
+            obj1.ChangeValue(3);
+
+            subject.ToArray().ShouldBe(new[] { obj1 });
+        }
+    }
+
+    public class MyObject : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        public int Value { get; set; }
+
+        public void ChangeValue(int value)
+        {
+            Value = value;
+            PropertyChanged(this, new PropertyChangedEventArgs("Value"));
         }
     }
 }

@@ -43,6 +43,9 @@
     <DocumentationFile>..\build\lib\sl3-wp\Stimpack.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Interactive">
+      <HintPath>..\packages\Ix_Experimental-Main.1.1.10823\lib\SL3-WP\System.Interactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Observable" />
     <Reference Include="System.Reactive">
       <HintPath>..\packages\Rx_Experimental-Main.1.1.11011\lib\SL3-WP\System.Reactive.dll</HintPath>
