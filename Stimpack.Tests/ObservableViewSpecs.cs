@@ -134,15 +134,49 @@ namespace Stimpack
         [Fact]
         public void Filter_respects_item_changes()
         {
-            var obj1 = new MyObject();
-            var obj2 = new MyObject();
-            var objects = new ObservableCollection<MyObject> { obj1, obj2 };
+            var obj = new MyObject { Value = 0 };
+            var obj2 = new MyObject { Value = 2 };
+            var obj3 = new MyObject { Value = 3 };
+            var objects = new ObservableCollection<MyObject> { obj2, obj, obj3, obj };
 
             var subject = new ObservableView<MyObject>(objects, x => x.Value > 0);
 
-            obj1.ChangeValue(3);
+            obj.ChangeValue(10);
+            obj2.ChangeValue(-1);
 
-            subject.ToArray().ShouldBe(new[] { obj1 });
+            subject.ToArray().ShouldBe(new[] { obj, obj3, obj });
+        }
+
+        [Fact]
+        public void Filter_ignores_removed_items()
+        {
+            var obj1 = new MyObject { Value = 1 };
+            var obj2 = new MyObject { Value = 2 };
+            var obj3 = new MyObject { Value = 3 };
+            var objects = new ObservableCollection<MyObject> { obj1, obj2, obj3 };
+
+            var subject = new ObservableView<MyObject>(objects, x => x.Value%2 == 1);
+
+            objects.Remove(obj2);
+            obj2.ChangeValue(5);
+
+            subject.ToArray().ShouldBe(new[] { obj1, obj3 });
+        }
+
+        [Fact]
+        public void Filter_ignores_removed_items_even_after_source_reset()
+        {
+            var obj1 = new MyObject { Value = 1 };
+            var obj2 = new MyObject { Value = 2 };
+            var obj3 = new MyObject { Value = 3 };
+            var objects = new ObservableCollection<MyObject> { obj1, obj2, obj3 };
+
+            var subject = new ObservableView<MyObject>(objects, x => x.Value % 2 == 1);
+
+            objects.Clear();
+            obj2.ChangeValue(5);
+
+            subject.ShouldBeEmpty();
         }
     }
 

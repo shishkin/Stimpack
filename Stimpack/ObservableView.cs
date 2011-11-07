@@ -5,7 +5,6 @@
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
-    using System.Reactive.Disposables;
     using System.Reactive.Linq;
 
     using Internal;
@@ -42,6 +41,8 @@
         void ClearAll()
         {
             ClearItems();
+            tracks.Values.ForEach(x => x.DisposeSubscriptions());
+            tracks.Clear();
         }
 
         void BindNotifications()
@@ -156,38 +157,6 @@
         {
             return notification.Action == NotifyCollectionChangedAction.Remove ||
                 notification.Action == NotifyCollectionChangedAction.Replace;
-        }
-
-        class ItemMetadata
-        {
-            readonly List<int> indices = new List<int>();
-            readonly CompositeDisposable subscriptions = new CompositeDisposable();
-
-            public void AddIndex(int index)
-            {
-                if (!indices.Contains(index))
-                {
-                    indices.Add(index);
-                }
-            }
-
-            public IEnumerable<int> Indices
-            {
-                get { return indices.AsEnumerable(); }
-            }
-
-            public void AddSubscription(IDisposable subscription)
-            {
-                subscriptions.Add(subscription);
-            }
-
-            public void DisposeSubscriptions()
-            {
-                if (!subscriptions.IsDisposed)
-                {
-                    subscriptions.Dispose();
-                }
-            }
         }
     }
 }
