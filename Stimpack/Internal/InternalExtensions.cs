@@ -5,8 +5,11 @@ namespace Stimpack.Internal
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Linq;
+    using System.Linq.Expressions;
     using System.Reactive;
     using System.Reactive.Linq;
+    using System.Reflection;
 
     static class InternalExtensions
     {
@@ -46,6 +49,16 @@ namespace Stimpack.Internal
                     x => target.PropertyChanged += x,
                     x => target.PropertyChanged -= x)
                 .Select(x => x);
+        }
+
+        public static PropertyInfo GetPropertyInfo(this LambdaExpression property)
+        {
+            return Enumerable.Repeat(property, 1)
+                .Select(x => x.Body)
+                .OfType<MemberExpression>()
+                .Select(x => x.Member)
+                .OfType<PropertyInfo>()
+                .FirstOrDefault();
         }
     }
 }
