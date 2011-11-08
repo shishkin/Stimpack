@@ -1,7 +1,12 @@
 namespace Stimpack
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Reactive;
+    using System.Reactive.Linq;
 
     public static class StimpackExtensions
     {
@@ -48,6 +53,48 @@ namespace Stimpack
             IComparer<T> order = null)
         {
             return new ObservableView<T>(source, filter, order);
+        }
+
+        /// <summary>
+        /// Creates an observable for objects implementing INPC.
+        /// </summary>
+        public static IObservable<EventPattern<PropertyChangedEventArgs>> ObservePropertyChanged(
+            this INotifyPropertyChanged target)
+        {
+            return Observable.FromEventPattern<
+                PropertyChangedEventHandler,
+                PropertyChangedEventArgs>(
+                    x => target.PropertyChanged += x,
+                    x => target.PropertyChanged -= x);
+        }
+
+        /// <summary>
+        /// Creates an observable for a collection implementing INCC.
+        /// </summary>
+        public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> ObserveCollectionChanged(
+            this IEnumerable source)
+        {
+            var notifying = source as INotifyCollectionChanged;
+            if (notifying == null)
+            {
+                return Observable.Never<EventPattern<NotifyCollectionChangedEventArgs>>();
+            }
+
+            return Observable.FromEventPattern<
+                NotifyCollectionChangedEventHandler,
+                NotifyCollectionChangedEventArgs>(
+                    ev => notifying.CollectionChanged += ev,
+                    ev => notifying.CollectionChanged -= ev);
+        }
+
+        /// <summary>
+        /// Creates an observable for a collection implementing INCC.
+        /// </summary>
+        public static IObservable<NotifyCollectionChangedEventArgs> ObserveCollectionChangedArgs(
+            this IEnumerable source)
+        {
+            return source.ObserveCollectionChanged()
+                .Select(x => x.EventArgs);
         }
     }
 }

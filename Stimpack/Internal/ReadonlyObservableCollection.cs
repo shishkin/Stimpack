@@ -1,12 +1,23 @@
 namespace Stimpack.Internal
 {
     using System;
+    using System.Collections.Specialized;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Reactive;
 
     public class ReadonlyObservableCollection<T>
-        : ObservableCollection<T>, IList<T>
+        : ObservableCollection<T>,
+        IList<T>,
+        IObservable<EventPattern<NotifyCollectionChangedEventArgs>>
     {
+        readonly IObservable<EventPattern<NotifyCollectionChangedEventArgs>> notifications;
+
+        protected ReadonlyObservableCollection()
+        {
+            notifications = this.ObserveCollectionChanged();
+        }
+
         bool ICollection<T>.IsReadOnly
         {
             get { return true; }
@@ -41,6 +52,12 @@ namespace Stimpack.Internal
         void IList<T>.RemoveAt(int index)
         {
             throw new InvalidOperationException();
+        }
+
+        public IDisposable Subscribe(
+            IObserver<EventPattern<NotifyCollectionChangedEventArgs>> observer)
+        {
+            return notifications.Subscribe(observer);
         }
     }
 }
